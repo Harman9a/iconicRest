@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  IonSkeletonText,
-  IonList,
-  IonListHeader,
-  IonItem,
-  IonLabel,
-  IonAvatar,
-  IonThumbnail,
-} from "@ionic/react";
+import { IonSkeletonText } from "@ionic/react";
 
 const SkeletonUserCard: React.FC = () => {
   return (

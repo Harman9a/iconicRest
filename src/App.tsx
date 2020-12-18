@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
@@ -10,10 +10,9 @@ import {
   IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { square, peopleOutline, personAdd } from "ionicons/icons";
+import { peopleOutline, personAdd } from "ionicons/icons";
 import Users from "./pages/Users";
 import AddUser from "./pages/AddUser";
-import Tab3 from "./pages/Tab3";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -35,21 +34,27 @@ import "@ionic/react/css/display.css";
 import "./theme/variables.css";
 
 const App: React.FC = () => {
-  const Addons = (x: string) => {
-    console.log(x);
+  const [newUser, setNewUser] = useState({});
+  const Addons = (newUserObj: object) => {
+    setNewUser(newUserObj);
   };
   return (
     <IonApp>
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/users" render={() => <Users />} exact={true} />
             <Route
-              path="/adduser"
-              render={() => <AddUser Addons={(x: string) => Addons(x)} />}
+              path="/users"
+              render={() => <Users newUser={newUser} />}
               exact={true}
             />
-            <Route path="/tab3" render={() => <Tab3 />} />
+            <Route
+              path="/adduser"
+              render={() => (
+                <AddUser newUser={(newUserObj: object) => Addons(newUserObj)} />
+              )}
+              exact={true}
+            />
             <Route
               path="/"
               render={() => <Redirect to="/users" />}
@@ -64,10 +69,6 @@ const App: React.FC = () => {
             <IonTabButton tab="adduser" href="/adduser">
               <IonIcon icon={personAdd} />
               <IonLabel>Add User</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
-              <IonIcon icon={square} />
-              <IonLabel>Tab 3</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>

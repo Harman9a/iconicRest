@@ -9,20 +9,27 @@ import {
   IonLabel,
   IonInput,
   IonButton,
+  IonToast,
 } from "@ionic/react";
+
 import "./AddUser.css";
 
-interface AddonsProps {
-  Addons: Function;
+interface NewUserProps {
+  newUser: Function;
 }
 
-const Tab2: React.FC<AddonsProps> = (props) => {
+const Tab2: React.FC<NewUserProps> = (props) => {
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [username, setUsername] = useState<string>();
+  const [showToast1, setShowToast1] = useState(false);
 
   const handleSubmit = () => {
-    props.Addons(name);
+    props.newUser({ name, email, username });
+    setName("");
+    setEmail("");
+    setUsername("");
+    setShowToast1(true);
   };
 
   return (
@@ -62,6 +69,12 @@ const Tab2: React.FC<AddonsProps> = (props) => {
         >
           Add User
         </IonButton>
+        <IonToast
+          isOpen={showToast1}
+          onDidDismiss={() => setShowToast1(false)}
+          message="User Added."
+          duration={200}
+        />
       </IonContent>
     </IonPage>
   );
